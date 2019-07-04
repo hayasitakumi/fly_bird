@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
 	public float scroll = 10f;
 	Rigidbody2D rb2d;
 
+	public ScoreText scoreText; //外部のScoteTextオブジェクトを見えるよう定義
+
 	// Updateの前に1回だけ呼ばれるメソッド
 	void Start()
 	{
@@ -30,6 +32,17 @@ public class Player : MonoBehaviour
 			rb2d.velocity = Vector2.zero;
 			// (0,1)方向に瞬間的に力を加えて跳ねさせる
 			rb2d.AddForce(Vector2.up * flap, ForceMode2D.Impulse);
+		}
+	}
+
+	// ColliderのIs Triggerにチェック有のオブジェクトとの衝突を検出する関数
+	void OnTriggerEnter2D(Collider2D col)
+	{
+
+		// CountZoneのタグが付いたオブジェクトと衝突したとき
+		if (col.gameObject.tag == "CountZone")
+		{
+			scoreText.GetComponent<ScoreText>().score++;
 		}
 	}
 }
